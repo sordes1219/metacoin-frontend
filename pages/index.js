@@ -74,14 +74,8 @@ export default function Home() {
       setUserAccount(accountsArray[0])
     }
 
-    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-    if(typeof ethereum !== 'undefined') {
-      startApp()
-    } else {
-      // Handle the case where the user doesn't have Metamask installed
-      // Probably show them a message prompting them to install Metamask
-      alert('Metamaskをインストールしてください')
-    }
+    startApp()
+
   },[])
 
   const [userAccount,setUserAccount] = useState('')
@@ -110,7 +104,7 @@ export default function Home() {
               <AccountOptions/>
             </select>
           </div>
-          <h5 className="my-3">残高：{balance} ETH</h5>
+          <h5 className="my-3">残高：{balance} Meta</h5>
           <h1 className="my-3">MetaCoin送金</h1>
           <form onSubmit={handleSubmit}>
             <div>
