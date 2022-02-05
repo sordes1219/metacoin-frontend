@@ -1,7 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import Link from 'next/link'
 import Script from 'next/script'
 import React, { useState, useEffect } from 'react';
 import Web3 from 'web3'
@@ -13,6 +11,16 @@ export default function Home() {
   const [toAddress, setToAddress] = useState('')
   const [amount, setAmount] = useState('')
   const [accounts,setAccounts] = useState([])
+  const [userAccount,setUserAccount] = useState('')
+
+  // スマートコントラクトのアドレス
+  const smartContractAddress = "0x1281b7c3630F8bACF413fBA3Fd6c8b474E0FE8b4"
+      
+  // Ganacheに接続するweb3インスタンス作成
+  const web3 = new Web3('ws://localhost:7545');
+
+  // コントラクト接続用インスタンスの作成
+  const instance = new web3.eth.Contract(MetaCoinABI, smartContractAddress)
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -55,30 +63,16 @@ export default function Home() {
     return optionItems
   }
 
-  // スマートコントラクトのアドレス
-  const smartContractAddress = "0x1281b7c3630F8bACF413fBA3Fd6c8b474E0FE8b4"
-      
-  // Ganacheに接続するweb3インスタンス作成
-  const web3 = new Web3('ws://localhost:7545');
-
-  // コントラクト接続用インスタンスの作成
-  const instance = new web3.eth.Contract(MetaCoinABI, smartContractAddress)
-  
-
   useEffect(() => {
     async function startApp() {
       // ユーザのアカウント
-      // const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       const accountsArray = await web3.eth.getAccounts()
       setAccounts(accountsArray)
       setUserAccount(accountsArray[0])
     }
-
     startApp()
-
   },[])
 
-  const [userAccount,setUserAccount] = useState('')
   useEffect(() => {
     if(instance && userAccount){
       getBalance(userAccount).then((res) => {
