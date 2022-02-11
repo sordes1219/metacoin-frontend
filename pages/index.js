@@ -91,28 +91,28 @@ export default function Home() {
       </Head>
       <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossOrigin="anonymous"></Script>
       <div className="container">
-          <h1 className="my-3">MetaCoin残高</h1>
+        <h1 className="my-3">MetaCoin残高</h1>
+        <div>
+          <label htmlFor="fromAddress" className="form-label">MetaCoinアドレス</label>
+          <select id="fromAddress" value={userAccount} className="form-select" aria-label="Default select example" onChange={handleUserSelector}>
+            <AccountOptions/>
+          </select>
+        </div>
+        <h5 className="my-3">残高：{balance} Meta</h5>
+        <h1 className="my-3">MetaCoin送金</h1>
+        <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="fromAddress" className="form-label">MetaCoinアドレス</label>
-            <select id="fromAddress" value={userAccount} className="form-select" aria-label="Default select example" onChange={handleUserSelector}>
+            <label htmlFor="toAddress" className="form-label">送金先アドレス</label>
+            <select id="toAddress" value={toAddress} className="form-select" aria-label="Default select example" onChange={(e) => setToAddress(e.target.value)}>
               <AccountOptions/>
             </select>
           </div>
-          <h5 className="my-3">残高：{balance} Meta</h5>
-          <h1 className="my-3">MetaCoin送金</h1>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="toAddress" className="form-label">送金先アドレス</label>
-              <select id="toAddress" value={toAddress} className="form-select" aria-label="Default select example" onChange={(e) => setToAddress(e.target.value)}>
-                <AccountOptions/>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="sendAmount" className="form-label">送金額</label>
-              <input type="number" id="sendAmount" className="form-control" value={amount} onChange={(e) => setAmount(e.target.value)}></input>
-            </div>
-            <input type="submit" value="上記内容で送金する" className="btn btn-dark"/>
-          </form>
+          <div className="mb-3">
+            <label htmlFor="sendAmount" className="form-label">送金額</label>
+            <input type="number" id="sendAmount" className="form-control" value={amount} onChange={(e) => setAmount(e.target.value)}></input>
+          </div>
+          <input type="submit" value="上記内容で送金する" className="btn btn-dark"/>
+        </form>
       </div>
       
     </div>
